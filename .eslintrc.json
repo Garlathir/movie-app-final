@@ -61,8 +61,7 @@
         "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "newlines-between": "always"
       }
-    ],
-    "camelcase": 0
+    ]
   },
   "settings": {
     "import/resolver": {

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { Online, Offline } from 'react-detect-offline'
 import { Alert, Tabs, Pagination } from 'antd'
 
 import './App.css'
 import SearchInput from '../SearchInput'
 import CardList from '../CardList'
-import MovieApi from '../../Services/MovieApiDb'
+import MovieApi from '../../services/MovieApiDb'
 import { MovieApiProvider } from '../MovieDbApiContext'
 
 export default class App extends Component {
@@ -63,14 +64,15 @@ export default class App extends Component {
   }
 
   paginationChange = (num) => {
-    const { query } = this.state
-    this.getMovies(query, num)
+    this.getMovies(this.state.query, num)
   }
 
   rateMovie = (id, rate) => {
     const guestId = sessionStorage.getItem('guestId')
     this.movieApi.rateMovie(id, rate, guestId)
-    this.setState(({ rated }) => ({ rated: { ...rated, [id]: rate } }))
+    this.setState(({ rated }) => {
+      return { rated: { ...rated, [id]: rate } }
+    })
   }
 
   onTabChanged = (tab) => {
@@ -98,13 +100,13 @@ export default class App extends Component {
       ) : null
 
     const searchTab = (
-      <>
+      <React.Fragment>
         <header className="page-header">
           <SearchInput getMovies={this.getMovies} />
         </header>
         <main className="main">
           <CardList
-            movies={movies}
+            movies={this.state.movies}
             getMovies={this.getMovies}
             loading={loading}
             error={error}
@@ -113,13 +115,13 @@ export default class App extends Component {
           />
           {pagination}
         </main>
-      </>
+      </React.Fragment>
     )
 
     const ratedTab = (
       <main className="main">
         <CardList
-          movies={movies}
+          movies={this.state.movies}
           getMovies={this.getRated}
           loading={loading}
           error={error}
@@ -149,11 +151,22 @@ export default class App extends Component {
 
     return (
       <div className="app">
+        {/* <Online> */}
         <div className="page-wrapper">
           <MovieApiProvider value={genres}>
             <Tabs items={items} onChange={(e) => this.onTabChanged(e)} />
           </MovieApiProvider>
         </div>
+        {/* </Online>
+        <Offline>
+          <Alert
+            className="offline-error"
+            message="Internet connection lost"
+            description="Check your internet connection and try again"
+            type="error"
+            showIcon
+          />
+        </Offline> */}
       </div>
     )
   }
