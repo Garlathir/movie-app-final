@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
 import { Typography, Rate } from 'antd'
-import format from 'date-fns/format'
 
-import MovieApi from '../../services/MovieApiDb'
 import { MovieApiConsumer } from '../MovieDbApiContext'
 
 import { truncate, averageColor, formatDate, renderImage } from './lib/lib'
 import './Card.css'
 
 function Card(props) {
-  const movieApi = new MovieApi()
   const { name, title, overview, release_date, poster_path, id, vote_average, genre_ids } = props.data
   const { rateMovie, rated } = props
   const { Text } = Typography

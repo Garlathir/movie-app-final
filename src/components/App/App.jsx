@@ -5,7 +5,7 @@ import { Alert, Tabs, Pagination } from 'antd'
 import './App.css'
 import SearchInput from '../SearchInput'
 import CardList from '../CardList'
-import MovieApi from '../../services/MovieApiDb'
+import MovieApi from '../../Services/MovieApiDb'
 import { MovieApiProvider } from '../MovieDbApiContext'
 
 export default class App extends Component {
